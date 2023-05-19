@@ -2,13 +2,13 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { resolve } from 'path';
 
-import homeRouter from './src/routes/homeRoutes';
-import userRouter from './src/routes/userRoutes';
-import tokenRouter from './src/routes/tokenRoutes';
-import studentRouter from './src/routes/studentRoutes';
-import pictureRouter from './src/routes/pictureRoutes';
+import homeRouter from './routes/homeRoutes';
+import userRouter from './routes/userRoutes';
+import tokenRouter from './routes/tokenRoutes';
+import studentRouter from './routes/studentRoutes';
+import pictureRouter from './routes/pictureRoutes';
 
-import './src/database';
+import './database';
 
 const bodyParser = require('body-parser');
 
