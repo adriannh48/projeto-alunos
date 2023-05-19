@@ -10,8 +10,6 @@ import pictureRouter from './routes/pictureRoutes';
 
 import './database';
 
-const bodyParser = require('body-parser');
-
 class App {
   constructor() {
     this.app = express();
@@ -23,8 +21,6 @@ class App {
   middlewares() {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
-    this.app.use(bodyParser.urlencoded({ extended: false }));
-    this.app.use(bodyParser.json());
     this.app.use(express.static(resolve(__dirname, 'uplouds')));
   }
 
