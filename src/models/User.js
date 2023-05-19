@@ -1,5 +1,6 @@
-import Sequelize, { Model } from "sequelize";
-import bcryptjs from "bcryptjs";
+/* eslint-disable no-param-reassign */
+import Sequelize, { Model } from 'sequelize';
+import bcryptjs from 'bcryptjs';
 
 export default class User extends Model {
   static init(sequelize) {
@@ -7,47 +8,47 @@ export default class User extends Model {
       {
         nome: {
           type: Sequelize.STRING,
-          defaultValue: "",
+          defaultValue: '',
           validate: {
             len: {
               args: [3, 255],
-              msg: "Campo nome deve ter entre 3 e 255 caracteres",
+              msg: 'Campo nome deve ter entre 3 e 255 caracteres',
             },
           },
         },
         email: {
           type: Sequelize.STRING,
-          defaultValue: "",
+          defaultValue: '',
           unique: {
-            msg: "email já cadastrado!",
+            msg: 'email já cadastrado!',
           },
           validate: {
             isEmail: {
-              msg: "Email invalido!",
+              msg: 'Email invalido!',
             },
           },
         },
         password_hash: {
           type: Sequelize.STRING,
-          defaultValue: "",
+          defaultValue: '',
         },
         password: {
           type: Sequelize.VIRTUAL,
-          defaultValue: "",
+          defaultValue: '',
           validate: {
             len: {
               args: [6, 50],
-              msg: "Campo nome deve ter entre 6 e 50 caracteres",
+              msg: 'Campo nome deve ter entre 6 e 50 caracteres',
             },
           },
         },
       },
       {
         sequelize,
-      }
+      },
     );
 
-    this.addHook("beforeSave", async (user) => {
+    this.addHook('beforeSave', async (user) => {
       if (user.password) {
         user.password_hash = await bcryptjs.hash(user.password, 8);
       }
@@ -57,7 +58,6 @@ export default class User extends Model {
   }
 
   static async passwordIsValid(password, passwordHash) {
-    console.log(this);
     return bcryptjs.compare(password, passwordHash);
   }
 }

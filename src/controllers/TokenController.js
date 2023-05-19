@@ -1,5 +1,5 @@
-import User from "../models/User";
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
+import User from '../models/User';
 
 class TokenController {
   async store(req, res) {
@@ -8,7 +8,7 @@ class TokenController {
 
       if (!email || !password) {
         return res.status(422).json({
-          errors: ["Credencias invalidas"],
+          errors: ['Credencias invalidas'],
         });
       }
 
@@ -16,14 +16,13 @@ class TokenController {
 
       if (!user) {
         return res.status(422).json({
-          errors: ["Usuario não existe"],
+          errors: ['Usuario não existe'],
         });
       }
 
       if (!(await User.passwordIsValid(password, user.password_hash))) {
-        console.log("asd");
         return res.status(401).json({
-          errors: ["Senha invalida"],
+          errors: ['Senha invalida'],
         });
       }
 

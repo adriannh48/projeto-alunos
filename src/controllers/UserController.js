@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from '../models/User';
 
 class UserController {
   async index(req, res) {
@@ -41,22 +41,17 @@ class UserController {
 
   async update(req, res) {
     try {
-      const { id } = req.params;
+      const { userId: id } = req;
       const values = req.body;
       const condition = { where: { id: Number(id) } };
-      if (!id) {
-        return res.status(422).json({
-          errors: ["Paramentros na requisição faltando!"],
-        });
-      }
+
       const users = await User.findByPk(id);
 
       if (!users) {
         return res.status(404).json({
-          errors: ["Usuario não encontrado"],
+          errors: ['Usuario não encontrado'],
         });
       }
-
       const newData = await User.update(values, condition, { multi: true });
 
       return res.json(newData);
@@ -67,19 +62,15 @@ class UserController {
 
   async delete(req, res) {
     try {
-      const { id } = req.params;
+      const { userId: id } = req;
+
       const condition = { where: { id: Number(id) } };
 
-      if (!id) {
-        return res.status(422).json({
-          errors: ["Paramentros na requisição faltando!"],
-        });
-      }
       const users = await User.findByPk(id);
 
       if (!users) {
         return res.status(404).json({
-          errors: ["Usuario não encontrado"],
+          errors: ['Usuario não encontrado'],
         });
       }
 
