@@ -1,6 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import dotenv from 'dotenv';
 import express from 'express';
 import { resolve } from 'path';
+import cors from 'cors';
+import helmet from 'helmet';
 
 import homeRouter from './routes/homeRoutes';
 import userRouter from './routes/userRoutes';
@@ -9,6 +12,20 @@ import studentRouter from './routes/studentRoutes';
 import pictureRouter from './routes/pictureRoutes';
 
 import './database';
+
+const whiteList = [
+  'http//localhost:3000',
+];
+
+const corsOption = {
+  origin(origin, call) {
+    if (whiteList.indexOf(origin) !== -1 || !origin) {
+      call(null, true);
+    } else {
+      call(new Error('Not allowed by CORS'));
+    }
+  },
+};
 
 class App {
   constructor() {
@@ -19,6 +36,8 @@ class App {
   }
 
   middlewares() {
+    this.app.use(cors(corsOption));
+    this.app.use(helmet());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     this.app.use('/images/', express.static(resolve(__dirname, '..', 'uplouds', 'images')));
